@@ -49,6 +49,7 @@ console.timeEnd('regexTest');
 
 console.log(api_key);
 console.log(SECRET_ACCESS_TOKEN);
+console.log(super_secret)
 
 
 app.get('/', (req, res) => {
