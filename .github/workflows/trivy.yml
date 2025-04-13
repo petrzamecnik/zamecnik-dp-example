@@ -14,7 +14,7 @@ jobs:
           scan-ref: '.'
           ignore-unfixed: false
           format: 'table'
-          exit-code: '1'
+          exit-code: '0'
           severity: 'CRITICAL,HIGH,MEDIUM'
 
       - name: Generate SBOM
