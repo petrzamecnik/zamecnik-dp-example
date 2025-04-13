@@ -33,7 +33,7 @@ jobs:
         if: always()
         with:
           name: sbom-cyclonedx
-          path: sbom-cyclonedx.json
+          path: sbom.cyclonedx.json
           retention-days: 1
 
 
