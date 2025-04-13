@@ -4,8 +4,9 @@ const port = 3000;
 
 
 
-const api_key = "AbCdEfGhIjKlMnOpQrStUvWxYz0123456789-_-"
+const api_key = "zYxWvUtSrQpOnMlKjIhGfEdCbA987asd6543210ggs"
 const SECRET_ACCESS_TOKEN = "zYxWvUtSrQpOnMlKjIhGfEdCbA9876543210.=foo"
+const super_secret = "abc132"
 
 
 
