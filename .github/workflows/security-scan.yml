@@ -1,0 +1,48 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies (incl. ESLint)
+        run: |
+          npm install express # Dependency z app.js
+          npm install --save-dev eslint eslint-plugin-security
+
+      - name: Run ESLint
+        run: npx eslint . --format stylish
+
+      - name: Download Gitleaks
+        run: |
+          VERSION=$(curl -s "https://api.github.com/repos/gitleaks/gitleaks/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+          wget "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz"
+          tar -xzf "gitleaks_${VERSION}_linux_x64.tar.gz"
+          sudo mv gitleaks /usr/local/bin/
+
+      - name: Run Gitleaks on entire directory
+        run: gitleaks detect --source="." --verbose --redact --report-format sarif --report-path gitleaks-report.sarif
+
+      - name: Upload Gitleaks report
+        uses: github/codeql-action/upload-sarif@vš
+        if: always()
+        with:
+          sarif_file: gitleaks-report.sarif
+
