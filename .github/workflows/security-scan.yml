@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies (incl. ESLint)
         run: |
-          npm install express # Dependency z app.js
+          npm install express
           npm install --save-dev eslint eslint-plugin-security
 
       - name: Run ESLint
